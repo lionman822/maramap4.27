@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>马赛马拉生态系统互动模拟器</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="topbar" aria-label="状态栏">
+        <div class="brand-block">
+          <div class="brand-topline">
+            <p class="eyebrow">Masai Mara Live System</p>
+            <button id="language-toggle" class="language-toggle" type="button" aria-label="Switch language">EN</button>
+          </div>
+          <h1 data-i18n="appTitle">马赛马拉生态系统互动模拟器</h1>
+        </div>
+        <article class="status-card live-overview" aria-label="实时状态总览">
+          <div class="overview-title">
+            <span class="status-label" data-i18n="overviewTitle">实时总览</span>
+            <small data-i18n="overviewSubtitle">真实时间、实时天气与生态平衡</small>
+          </div>
+          <div class="overview-grid">
+            <div class="overview-item time-card">
+              <span class="status-label" data-i18n="nairobiTime">内罗毕时间 UTC+3</span>
+              <strong id="nairobi-time">--:--:--</strong>
+              <small id="nairobi-date">--</small>
+            </div>
+            <div class="overview-item weather-card">
+              <span class="status-label" data-i18n="weatherTitle">马赛马拉天气</span>
+              <strong id="weather-main">读取中</strong>
+              <small id="weather-detail">等待实时数据</small>
+            </div>
+            <div class="overview-item balance-card">
+              <span class="status-label" data-i18n="balanceTitle">生态平衡</span>
+              <strong id="balance-score">--</strong>
+              <small id="balance-state">同步中</small>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="dashboard-grid">
+        <div class="map-panel" aria-label="雷达生态地图">
+          <div class="map-header">
+            <div>
+              <p class="eyebrow">Radar Habitat Map</p>
+              <h2 data-i18n="mapTitle">实时互动雷达</h2>
+            </div>
+          </div>
+
+          <div class="map-stage">
+            <svg id="ecosystem-map" viewBox="0 0 920 620" role="img" aria-label="马赛马拉地形、植被与动物互动雷达图">
+              <defs>
+                <filter id="terrain-noise">
+                  <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="3" seed="8" />
+                  <feColorMatrix type="saturate" values="0.28" />
+                  <feBlend mode="multiply" in2="SourceGraphic" />
+                </filter>
+                <linearGradient id="river-gradient" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0%" stop-color="#79d0ee" />
+                  <stop offset="48%" stop-color="#2888b8" />
+                  <stop offset="100%" stop-color="#0f5f86" />
+                </linearGradient>
+                <marker id="hunt-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="4.8" markerHeight="4.8" orient="auto-start-reverse">
+                  <path d="M1 1 L11 6 L1 11 Z" fill="#dc4f32" />
+                </marker>
+                <marker id="scavenge-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="4.8" markerHeight="4.8" orient="auto-start-reverse">
+                  <path d="M1 1 L11 6 L1 11 Z" fill="#8d65c5" />
+                </marker>
+                <pattern id="grass-pattern" width="26" height="26" patternUnits="userSpaceOnUse">
+                  <path d="M4 22 C8 15 9 10 10 3 M15 24 C14 16 18 12 22 6 M1 10 C6 13 8 16 9 21" fill="none" stroke="#8ea34e" stroke-opacity="0.2" stroke-width="1.2" />
+                </pattern>
+              </defs>
+
+              <rect width="920" height="620" fill="#c7d772" />
+              <rect width="920" height="620" fill="url(#grass-pattern)" filter="url(#terrain-noise)" opacity="0.88" />
+
+              <g id="mountains" aria-label="山地">
+                <path d="M0 0 H260 C226 52 219 103 166 132 C104 166 54 129 0 156 Z" fill="#8f8a66" />
+                <path d="M920 0 H692 C724 45 722 84 764 116 C812 153 868 134 920 168 Z" fill="#9d9369" />
+                <path d="M36 23 C61 66 91 88 134 106 C91 116 50 112 11 83 Z" fill="#b9b188" opacity="0.72" />
+                <path d="M744 30 C786 69 826 93 892 101 C855 122 791 124 724 90 Z" fill="#beb48b" opacity="0.68" />
+              </g>
+
+              <g id="habitat-zones" aria-label="植被带">
+                <path id="shrub-band-left" d="M287 -42 C244 27 270 101 338 146 C394 184 336 230 296 276 C242 340 306 390 358 429 C412 471 341 514 306 577 C274 636 335 670 314 706 C337 704 366 704 394 704 C407 655 358 605 384 556 C411 505 476 468 424 411 C374 356 341 306 382 262 C429 210 469 173 407 128 C353 89 330 43 363 -42 Z" fill="#8a9553" opacity="0.82" filter="url(#terrain-noise)" />
+                <path id="shrub-band-right" d="M550 -42 C610 31 587 92 532 135 C484 173 534 225 583 273 C640 331 577 386 520 427 C470 466 540 513 578 568 C617 631 544 672 561 706 C589 706 622 704 648 704 C680 633 621 579 649 520 C678 459 617 418 602 377 C581 319 638 285 631 225 C622 164 579 140 609 88 C636 43 619 2 604 -42 Z" fill="#8a9553" opacity="0.82" filter="url(#terrain-noise)" />
+                <path id="forest-band-left" d="M363 -42 C330 43 353 89 407 128 C469 173 429 210 382 262 C341 306 374 356 424 411 C476 468 411 505 384 556 C358 605 407 655 394 704 C421 705 452 704 477 704 C487 648 455 596 486 549 C521 497 552 453 517 413 C465 363 430 315 475 260 C515 215 537 166 498 137 C431 88 410 36 449 -42 Z" fill="#436f3f" opacity="0.94" filter="url(#terrain-noise)" />
+                <path id="forest-band-right" d="M484 -42 C472 34 462 77 522 123 C562 153 560 203 512 264 C462 324 494 366 539 411 C580 451 552 497 525 556 C498 612 550 653 506 704 C526 705 545 705 561 706 C544 672 617 631 578 568 C540 513 470 466 520 427 C577 386 640 331 583 273 C534 225 484 173 532 135 C587 92 610 31 550 -42 Z" fill="#436f3f" opacity="0.94" filter="url(#terrain-noise)" />
+                <path id="river" d="M449 -42 C410 36 431 88 498 137 C537 166 515 215 475 260 C430 315 465 363 517 413 C552 453 521 497 486 549 C455 596 487 648 477 704 C487 706 499 706 506 704 C550 653 498 612 525 556 C552 497 580 451 539 411 C494 366 462 324 512 264 C560 203 562 153 522 123 C462 77 472 34 484 -42 Z" fill="url(#river-gradient)" opacity="0.96" />
+                <path d="M462 -30 C433 58 514 105 501 150 C486 205 465 234 486 278 C508 324 471 357 522 413 C555 450 525 505 506 547 C486 590 511 641 493 694" fill="none" stroke="#d9f5ff" stroke-width="5.5" stroke-linecap="round" opacity="0.32" />
+              </g>
+
+              <g id="habitat-detail" aria-hidden="true"></g>
+              <rect id="day-night-overlay" width="920" height="620" aria-hidden="true" />
+
+              <g id="radar-grid" aria-hidden="true">
+                <circle cx="460" cy="310" r="118" />
+                <circle cx="460" cy="310" r="226" />
+                <circle cx="460" cy="310" r="334" />
+                <path d="M460 0 V620 M0 310 H920" />
+                <path d="M135 0 L785 620 M785 0 L135 620" />
+              </g>
+
+              <g id="interaction-layer"></g>
+              <g id="animal-layer"></g>
+              <g id="label-layer"></g>
+              <g id="temporary-label-layer"></g>
+              <g id="weather-layer" aria-hidden="true"></g>
+            </svg>
+          </div>
+
+          <div class="habitat-legend" aria-label="地形、植被、动物颜色与互动线图解">
+            <span data-i18n="legendGrass"><i style="--swatch:#c7d772"></i>草原 60%</span>
+            <span data-i18n="legendShrub"><i style="--swatch:#8a9553"></i>灌丛 25%</span>
+            <span data-i18n="legendForest"><i style="--swatch:#436f3f"></i>林地 15%</span>
+            <span data-i18n="legendRiver"><i style="--swatch:#2888b8"></i>河流</span>
+            <span data-i18n="legendMountain"><i style="--swatch:#9d9369"></i>山地</span>
+            <span class="legend-group-label" data-i18n="legendCarnivores">食肉动物颜色</span>
+            <span data-i18n="speciesLion"><i class="animal-swatch" style="--swatch:#e11919"></i>狮子</span>
+            <span data-i18n="speciesLeopard"><i class="animal-swatch" style="--swatch:#d9a300"></i>花豹</span>
+            <span data-i18n="speciesCheetah"><i class="animal-swatch" style="--swatch:#ffd21f"></i>猎豹</span>
+            <span data-i18n="speciesHyena"><i class="animal-swatch" style="--swatch:#ff6fb1"></i>斑鬣狗</span>
+            <span data-i18n="speciesJackal"><i class="animal-swatch" style="--swatch:#8b5a2b"></i>黑背胡狼</span>
+            <span class="legend-group-label" data-i18n="legendOthers">其它动物颜色</span>
+            <span data-i18n="speciesWarthog"><i class="animal-swatch" style="--swatch:#7f8582"></i>疣猪</span>
+            <span data-i18n="legendPrimates"><i class="animal-swatch" style="--swatch:#2f8f45"></i>狒狒 / 绿猴</span>
+            <span data-i18n="legendHerbivores"><i class="animal-swatch" style="--swatch:#111111"></i>食草动物</span>
+            <span class="legend-group-label" data-i18n="legendLines">互动线</span>
+            <span data-i18n="lineHunt"><i class="line-swatch predation-line"></i>捕猎</span>
+            <span data-i18n="lineAvoidance"><i class="line-swatch avoidance-line"></i>避让</span>
+            <span data-i18n="lineCarnivoreConflict"><i class="line-swatch carnivore-conflict-line"></i>食肉动物冲突</span>
+            <span data-i18n="lineBuffaloCounter"><i class="line-swatch buffalo-counter-line"></i>水牛反击狮子</span>
+            <span data-i18n="lineScavenge"><i class="line-swatch scavenge-line"></i>抢食</span>
+            <span data-i18n="lineCarcass"><i class="carcass-swatch"></i>残食点</span>
+          </div>
+        </div>
+
+        <section class="event-panel" aria-label="互动事件">
+          <div class="section-title">
+            <h2 data-i18n="eventsTitle">互动事件</h2>
+            <span id="event-count">0</span>
+          </div>
+          <ol id="event-feed" class="event-feed"></ol>
+        </section>
+
+        <aside class="side-panel" aria-label="生态指标">
+          <section class="metric-stack">
+            <article class="metric-card">
+              <span data-i18n="vegetationMetric">植被恢复</span>
+              <strong id="vegetation-score">--%</strong>
+              <div class="meter"><i id="vegetation-meter"></i></div>
+            </article>
+            <article class="metric-card">
+              <span data-i18n="predatorMetric">捕食压力</span>
+              <strong id="predator-pressure">--%</strong>
+              <div class="meter hot"><i id="predator-meter"></i></div>
+            </article>
+            <article class="metric-card">
+              <span data-i18n="waterMetric">水源压力</span>
+              <strong id="water-pressure">--%</strong>
+              <div class="meter water"><i id="water-meter"></i></div>
+            </article>
+          </section>
+        </aside>
+      </section>
+
+      <section class="bottom-grid">
+        <article class="species-panel">
+          <div class="section-title">
+            <h2 data-i18n="speciesCountTitle">物种数量</h2>
+            <span id="visible-count">-- 个群体在画面中</span>
+          </div>
+          <div id="species-list" class="species-list" aria-live="polite"></div>
+          <section class="species-trend-panel" aria-label="每个物种数量变化曲线">
+            <div class="trend-title">
+              <span data-i18n="trendTitle">数量变化曲线</span>
+              <small id="species-trend-note">最近数据记录中</small>
+            </div>
+            <div id="species-trend-list" class="species-trend-list"></div>
+          </section>
+        </article>
+
+        <article class="relationship-panel">
+          <div class="section-title">
+            <h2 data-i18n="dailyReportTitle">每日数据报告</h2>
+            <span id="relationship-mode">今日记录中</span>
+          </div>
+          <div id="relationship-list" class="relationship-list"></div>
+        </article>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
