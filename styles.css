@@ -468,8 +468,10 @@ h2 {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: rgba(105, 64, 47, 0.78);
-  box-shadow: 0 0 0 4px rgba(141, 101, 197, 0.18);
+  background: rgba(21, 149, 198, 0.9);
+  box-shadow:
+    0 0 0 4px rgba(64, 197, 255, 0.2),
+    0 0 16px rgba(64, 197, 255, 0.62);
 }
 
 .map-stage {
@@ -666,17 +668,27 @@ h2 {
 }
 
 .kill-site {
-  fill: rgba(105, 64, 47, 0.72);
-  stroke: rgba(255, 242, 204, 0.88);
+  fill: rgba(21, 149, 198, 0.84);
+  stroke: rgba(216, 249, 255, 0.95);
   stroke-width: 2;
-  filter: drop-shadow(0 2px 5px rgba(48, 24, 15, 0.25));
+  filter:
+    drop-shadow(0 0 7px rgba(64, 197, 255, 0.64))
+    drop-shadow(0 2px 5px rgba(18, 68, 94, 0.28));
   pointer-events: none;
 }
 
 .carcass-scent {
-  fill: rgba(141, 101, 197, 0.14);
-  stroke: rgba(141, 101, 197, 0.34);
+  fill: rgba(64, 197, 255, 0.12);
+  stroke: rgba(64, 197, 255, 0.38);
   stroke-width: 2;
+  pointer-events: none;
+}
+
+.carcass-light {
+  fill: none;
+  stroke: rgba(88, 215, 255, 0.72);
+  stroke-width: 2.2;
+  filter: drop-shadow(0 0 8px rgba(88, 215, 255, 0.62));
   pointer-events: none;
 }
 

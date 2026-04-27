@@ -44,7 +44,7 @@ const I18N = {
     pageTitle: "马赛马拉生态系统互动模拟器",
     appTitle: "马赛马拉生态系统互动模拟器",
     projectSubtitle: "本项目是基于星巴（Simba Qiang Zhuo）长期在马赛马拉的实地研究和保护工作做的非洲草原生态系统的模拟场景。",
-    supportCredit: "感谢支持：Simon Masago, Jackson Looseyia, Simon Nkoitoi, Nelson Reiya, Josheph Kipiri Letoluo, Jeremiah Ntokoiwuan",
+    supportCredit: "感谢支持：Simon Masago, Jackson Looseyia, Simon Nkoitoi, Nelson Reiya, Josheph Kipiri Letoluo, Jeremiah Ntokoiwuan, Mengxi Kou",
     switchLanguage: "切换为英文",
     overviewTitle: "实时总览",
     overviewSubtitle: "真实时间、实时天气与生态平衡",
@@ -132,7 +132,7 @@ const I18N = {
     pageTitle: "Maasai Mara Ecosystem Interactive Simulator",
     appTitle: "Maasai Mara Ecosystem Interactive Simulator",
     projectSubtitle: "This project is a simulated African savanna ecosystem scenario based on Simba Qiang Zhuo's long-term field research and conservation work in the Maasai Mara.",
-    supportCredit: "Supported with thanks to: Simon Masago, Jackson Looseyia, Simon Nkoitoi, Nelson Reiya, Josheph Kipiri Letoluo, Jeremiah Ntokoiwuan",
+    supportCredit: "Supported with thanks to: Simon Masago, Jackson Looseyia, Simon Nkoitoi, Nelson Reiya, Josheph Kipiri Letoluo, Jeremiah Ntokoiwuan, Mengxi Kou",
     switchLanguage: "Switch to Chinese",
     overviewTitle: "Live Overview",
     overviewSubtitle: "Real time, live weather, and ecosystem balance",
@@ -1904,6 +1904,18 @@ function renderInteractions() {
       r: clamp(radius + 10 + site.biomass * 0.12, 16, 42).toFixed(1),
       opacity: (opacity * 0.55).toFixed(2),
     });
+    fragment.append(scent);
+    for (let ringIndex = 0; ringIndex < 3; ringIndex += 1) {
+      const phase = (site.age * 0.42 + ringIndex / 3) % 1;
+      const ring = svgEl("circle", {
+        class: "carcass-light",
+        cx: site.x.toFixed(1),
+        cy: site.y.toFixed(1),
+        r: (radius + 8 + phase * 46).toFixed(1),
+        opacity: (opacity * (1 - phase) * 0.5).toFixed(2),
+      });
+      fragment.append(ring);
+    }
     const mark = svgEl("circle", {
       class: "kill-site",
       cx: site.x.toFixed(1),
@@ -1911,7 +1923,7 @@ function renderInteractions() {
       r: radius.toFixed(1),
       opacity: opacity.toFixed(2),
     });
-    fragment.append(scent, mark);
+    fragment.append(mark);
   }
   for (const site of treeDamageSites) {
     const opacity = clamp(1 - site.age / site.life, 0, 1);
