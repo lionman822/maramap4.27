@@ -43,6 +43,8 @@ const I18N = {
   zh: {
     pageTitle: "马赛马拉生态系统互动模拟器",
     appTitle: "马赛马拉生态系统互动模拟器",
+    projectSubtitle: "本项目是基于星巴（Simba Qiang Zhuo）长期在马赛马拉的实地研究和保护工作做的非洲草原生态系统的模拟场景。",
+    supportCredit: "感谢支持：Simon Masago, Jackson Looseyia, Simon Nkoitoi, Nelson Reiya, Josheph Kipiri Letoluo, Jeremiah Ntokoiwuan",
     switchLanguage: "切换为英文",
     overviewTitle: "实时总览",
     overviewSubtitle: "真实时间、实时天气与生态平衡",
@@ -129,6 +131,8 @@ const I18N = {
   en: {
     pageTitle: "Maasai Mara Ecosystem Interactive Simulator",
     appTitle: "Maasai Mara Ecosystem Interactive Simulator",
+    projectSubtitle: "This project is a simulated African savanna ecosystem scenario based on Simba Qiang Zhuo's long-term field research and conservation work in the Maasai Mara.",
+    supportCredit: "Supported with thanks to: Simon Masago, Jackson Looseyia, Simon Nkoitoi, Nelson Reiya, Josheph Kipiri Letoluo, Jeremiah Ntokoiwuan",
     switchLanguage: "Switch to Chinese",
     overviewTitle: "Live Overview",
     overviewSubtitle: "Real time, live weather, and ecosystem balance",
